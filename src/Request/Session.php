@@ -9,11 +9,15 @@ class Session {
         /** @var Application */
         public $application;
         public $sessionId;
+        public $attributes = array();
 
 	public function __construct($data) {
 		$this->user = new User($data['user']);
-		$this->sessionId = isset($data['sessionId']) ? $this->parseSessionId($data['sessionId']) : null;
+		$this->sessionId = isset($data['sessionId']) ? $data['sessionId'] : null;
                 $this->new = isset($data['new']) ? $data['new'] : null;
+                if(!$this->new && isset($data['attributes'])) {
+                        $this->attributes = $data['attributes'];
+                }
 	}
         
         /**
@@ -37,7 +41,7 @@ class Session {
          */
         public function openSession() {
                 ini_set('session.use_cookies', 0); # disable session cookies
-                session_id($this->sessionId);
+                session_id($this->parseSessionId($this->sessionId));
                 return session_start();
         }
 

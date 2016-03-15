@@ -15,6 +15,11 @@ class Response {
 		$this->outputSpeech = new OutputSpeech;
 	}
 
+        /**
+         * Set output speech
+         * @param type $text
+         * @return \Alexa\Response\Response
+         */
 	public function respond($text) {
 		$this->outputSpeech = new OutputSpeech;
 		$this->outputSpeech->text = $text;
@@ -22,6 +27,11 @@ class Response {
 		return $this;
 	}
 
+        /**
+         * Set up repompt and set text
+         * @param type $text
+         * @return \Alexa\Response\Response
+         */
 	public function reprompt($text) {
 		$this->reprompt = new Reprompt;
 		$this->reprompt->outputSpeech->text = $text;
@@ -29,6 +39,12 @@ class Response {
 		return $this;
 	}
 
+        /**
+         * Add card information
+         * @param type $title
+         * @param type $content
+         * @return \Alexa\Response\Response
+         */
 	public function withCard($title, $content = '') {
 		$this->card = new Card;
 		$this->card->title = $title;
@@ -37,12 +53,30 @@ class Response {
 		return $this;
 	}
 
+        /**
+         * Set if it should end the session
+         * @param type $shouldEndSession
+         * @return \Alexa\Response\Response
+         */
 	public function endSession($shouldEndSession = true) {
 		$this->shouldEndSession = $shouldEndSession;
 
 		return $this;
 	}
+        
+        /**
+         * Add a session attribute that will be passed in every requests.
+         * @param string $key
+         * @param mixed $value
+         */
+        public function addSessionAttribute($key, $value) {
+                $this->sessionAttributes[$key] = $value;
+        }
 
+        /**
+         * Return the response as an array for JSON-ification
+         * @return type
+         */
 	public function render() {
 		return array(
 			'version' => $this->version,
