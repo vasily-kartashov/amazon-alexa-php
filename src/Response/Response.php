@@ -4,7 +4,7 @@ namespace Alexa\Response;
 
 class Response {
 	public $version = '1.0';
-	public $sessionAttributes = [];
+	public $sessionAttributes = array();
 
 	public $outputSpeech = null;
 	public $card = null;
@@ -44,15 +44,15 @@ class Response {
 	}
 
 	public function render() {
-		return [
+		return array(
 			'version' => $this->version,
 			'sessionAttributes' => $this->sessionAttributes,
-			'response' => [
+			'response' => array(
 				'outputSpeech' => $this->outputSpeech ? $this->outputSpeech->render() : null,
 				'card' => $this->card ? $this->card->render() : null,
 				'reprompt' => $this->reprompt ? $this->reprompt->render() : null,
 				'shouldEndSession' => $this->shouldEndSession ? true : false
-			]
-		];
+			)
+		);
 	}
 }

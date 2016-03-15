@@ -8,10 +8,10 @@ class Card {
 	public $content = '';
 
 	public function render() {
-		return [
+		return array(
 			'type' => $this->type,
 			'title' => $this->title,
 			'content' => $this->content,
-		];
+		);
 	}
 }

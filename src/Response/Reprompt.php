@@ -10,8 +10,8 @@ class Reprompt {
 	}
 
 	public function render() {
-		return [
+		return array(
 			'outputSpeech' => $this->outputSpeech->render()
-		];
+		);
 	}
 }

@@ -4,7 +4,7 @@ namespace Alexa\Request;
 
 class IntentRequest extends Request {
 	public $intentName;
-	public $slots = [];
+	public $slots = array();
 
 	public function __construct($data) {
 		parent::__construct($data);

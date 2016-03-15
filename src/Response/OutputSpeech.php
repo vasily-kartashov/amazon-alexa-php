@@ -7,9 +7,9 @@ class OutputSpeech {
 	public $text = '';
 
 	public function render() {
-		return [
+		return array(
 			'type' => $this->type,
 			'text' => $this->text
-		];
+		);
 	}
 }
