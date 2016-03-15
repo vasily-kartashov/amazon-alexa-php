@@ -44,5 +44,19 @@ class Session {
                 session_id($this->parseSessionId($this->sessionId));
                 return session_start();
         }
+        
+        /**
+         * Returns attribute value of $default.
+         * @param string $key
+         * @param mixed $default
+         * @return mixed
+         */
+        public function getAttribute($key, $default = false) {
+                if(array_key_exists($key, $this->attributes)) {
+                        return $this->attributes[$key];
+                } else {
+                        return $default;
+                }
+        }
 
 }
