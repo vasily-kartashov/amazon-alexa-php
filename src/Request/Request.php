@@ -11,7 +11,8 @@ abstract class Request {
 
 	public $requestId;
 	public $timestamp;
-	public $user;
+        /** @var Session */
+	public $session;
 
         /**
          * Set up Request with RequestId, timestamp (DateTime) and user (User obj.)
@@ -20,7 +21,7 @@ abstract class Request {
 	public function __construct($data) {
 		$this->requestId = $data['request']['requestId'];
 		$this->timestamp = new DateTime($data['request']['timestamp']);
-		$this->user = new User($data['session']['user']);
+		$this->session = new Session($data['session']);
 	}
 
         /**
@@ -32,7 +33,7 @@ abstract class Request {
          */
 	public static function fromData($data) {
 		$requestType = $data['request']['type'];
-
+                
 		if (!class_exists('\\Alexa\\Request\\' . $requestType)) {
 			throw new RuntimeException('Unknown request type: ' . $requestType);
 		}
