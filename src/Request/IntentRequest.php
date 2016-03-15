@@ -19,4 +19,20 @@ class IntentRequest extends Request {
 			}
 		}
 	}
+        
+        
+        /**
+         * Returns the value for the requested intent slot, or $default if not
+         * found.
+         * @param string $name
+         * @param mixed $default
+         * @return mixed
+         */
+        public function getSlot($name, $default = false) {
+                if(array_key_exists($name, $this->slots)) {
+                        return $this->slots[$name];
+                } else {
+                        return $default;
+                }
+        }
 }
