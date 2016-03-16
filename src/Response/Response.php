@@ -16,8 +16,8 @@ class Response {
 	}
 
         /**
-         * Set output speech
-         * @param type $text
+         * Set output speech as text
+         * @param string $text
          * @return \Alexa\Response\Response
          */
 	public function respond($text) {
@@ -26,10 +26,23 @@ class Response {
 
 		return $this;
 	}
+        
+        /**
+         * Set up response with SSML.
+         * @param string $ssml
+         * @return \Alexa\Response\Response
+         */
+        public function respondSSML($ssml) {
+                $this->outputSpeech = new OutputSpeech;
+                $this->outputSpeech->type = 'SSML';
+                $this->outputSpeech->ssml = $ssml;
+                
+                return $this;
+        }
 
         /**
-         * Set up repompt and set text
-         * @param type $text
+         * Set up reprompt with given text
+         * @param string $text
          * @return \Alexa\Response\Response
          */
 	public function reprompt($text) {
@@ -38,11 +51,24 @@ class Response {
 
 		return $this;
 	}
+        
+        /**
+         * Set up reprompt with given ssml
+         * @param string $ssml
+         * @return \Alexa\Response\Response
+         */
+	public function repromptSSML($ssml) {
+		$this->reprompt = new Reprompt;
+                $this->reprompt->outputSpeech->type = 'SSML';
+		$this->reprompt->outputSpeech->text = $ssml;
+
+		return $this;
+	}
 
         /**
          * Add card information
-         * @param type $title
-         * @param type $content
+         * @param string $title
+         * @param string $content
          * @return \Alexa\Response\Response
          */
 	public function withCard($title, $content = '') {
