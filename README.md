@@ -49,6 +49,3 @@ header('Content-Type: application/json');
 echo json_encode($response->render());
 exit;
 ```
-
-## TODO
-* Verify request timestamp integrity automatically
