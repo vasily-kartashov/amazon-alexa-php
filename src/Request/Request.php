@@ -22,10 +22,13 @@ abstract class Request {
 		$this->requestId = $data['request']['requestId'];
 		$this->timestamp = new DateTime($data['request']['timestamp']);
 		$this->session = new Session($data['session']);
+		
+		// Validate the request timestamp as per Amazon requirements.
+		$this->validate();
 	}
 
         /**
-         * Instance the corrct type of Request, based on the $jons->request->type
+         * Instance the correct type of Request, based on the $jons->request->type
          * value.
          * @param type $data
          * @return \Alexa\Request\Request   base class
