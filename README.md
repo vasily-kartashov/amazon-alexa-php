@@ -25,6 +25,35 @@ if ($alexaRequest instanceof IntentRequest) {
 }
 ```
 
+### Certificate validation
+By default the system validates the request signature by fetching Amazon's signing certificate and decrypting the signature. You need CURL to be able to get the certificate. No caching is done but you can override the Certificate class easily if you want to implement certificate caching yourself based on what your app provides:
+
+Here is a basic example:
+```php
+class MyAppCertificate extends \Alexa\Request\Certificate {
+  public function getCertificate() {
+    $cached_certificate = retrieve_cert_from_myapp_cache();
+    if (empty($cached_certificate)) {
+      // Certificate is not cached, download it
+      $cached_ertificate = $this->fetchCertificate();
+      // Cache it now
+    }
+    return $cached_certificate;
+  }
+}
+```
+
+And then in your app, use the setCertificateDependency function:
+
+```php
+$certificate = new MyAppCertificate($_SERVER['HTTP_SIGNATURECERTCHAINURL'], $_SERVER['HTTP_SIGNATURE']);
+
+$alexa = new \Alexa\Request\Request($rawRequest);
+$alexa->setCertificateDependency($certificate);
+
+$alexaRequest = $alexa->fromData();
+```
+
 ### Response
 You can build an Alexa response with the `Response` class. You can optionally set a card or a reprompt too.
 

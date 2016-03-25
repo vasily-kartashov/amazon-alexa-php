@@ -60,7 +60,7 @@ class Certificate {
 	 * Check if request is whithin the allowed time.
 	 * @throws InvalidArgumentException
 	 */
-	private function validateTimestamp($timestamp) {
+	public function validateTimestamp($timestamp) {
 		$now = new DateTime;
 		$timestamp = new DateTime($timestamp);
 		$differenceInSeconds = $now->getTimestamp() - $timestamp->getTimestamp();
@@ -71,7 +71,7 @@ class Certificate {
 	}
 
 	public function validateCertificate() {
-		$this->certificateContent = $this->downloadCertificate();
+		$this->certificateContent = $this->getCertificate();
 		$parsedCertificate = $this->parseCertificate($this->certificateContent);
 
 		if (!$this->validateCertificateDate($parsedCertificate) || !$this->validateCertificateSAN($parsedCertificate, static::ECHO_SERVICE_DOMAIN)) {
@@ -82,7 +82,7 @@ class Certificate {
 	 * @params $requestData 
 	 * @throws InvalidArgumentException
 	 */
-	function validateRequestSignature($requestData) {
+	public function validateRequestSignature($requestData) {
 		$certKey = openssl_pkey_get_public($this->certificateContent);
 
 		$valid = openssl_verify($requestData, base64_decode($this->requestSignature), $certKey, self::ENCRYPT_METHOD);
@@ -97,7 +97,7 @@ class Certificate {
 	 * @param array $parsedCertificate
 	 * @return boolean
 	 */
-	protected function validateCertificateDate(array $parsedCertificate){
+	public function validateCertificateDate(array $parsedCertificate){
 		$validFrom = $parsedCertificate['validFrom_time_t'];
 		$validTo = $parsedCertificate['validTo_time_t'];
 		$time = time();
@@ -109,7 +109,7 @@ class Certificate {
 	 * @param array $parsedCertificate
 	 * @return boolean
 	 */
-	protected function validateCertificateSAN(array $parsedCertificate, $amazonServiceDomain)
+	public function validateCertificateSAN(array $parsedCertificate, $amazonServiceDomain)
 	{
 		if (strpos($parsedCertificate['extensions']['subjectAltName'], $amazonServiceDomain) === false) {
 			return false;
@@ -123,7 +123,7 @@ class Certificate {
 	 * @throws InvalidArgumentException
 	 * @author Emanuele Corradini <emanuele@evensi.com>
 	 */
-	private function verifySignatureCertificateURL() {
+	public function verifySignatureCertificateURL() {
 		$url = parse_url($this->certificateUrl);
 
 		if ($url['scheme'] !== static::SIGNATURE_VALID_PROTOCOL) {
@@ -142,16 +142,22 @@ class Certificate {
 	 * Parse the X509 certificate
 	 * @param $certificate The certificate contents
 	 */
-	private function parseCertificate($certificate) {
+	public function parseCertificate($certificate) {
 		return openssl_x509_parse($certificate);
 	}
 
 	/**
-	 * Download the certificate from the specified URL. Other
-	 * implementations might choose to override this function to cache the
-	 * certificate for a specific time.
+	 * Return the certificate to the underlying code by fetching it from its location.
+	 * Override this function if you wish to cache the certificate for a specific time.
 	 */
-	private function downloadCertificate() {
+	public function getCertificate() {
+		return $this->fetchCertificate();
+	}
+
+	/**
+	 * Perform the actual download of the certificate
+	 */
+	public function fetchCertificate() {
 		if (!function_exists("curl_init")) {
 			throw new InvalidArgumentException('CURL is required to download the Signature Certificate.');
 		}
