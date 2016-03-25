@@ -7,7 +7,6 @@ class IntentRequest extends Request {
 	public $slots = array();
 
 	public function __construct($data) {
-		parent::__construct($data);
 
 		$this->intentName = $data['request']['intent']['name'];
 

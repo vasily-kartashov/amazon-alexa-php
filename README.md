@@ -9,11 +9,14 @@ Install via composer: `composer require minicodemonkey/amazon-alexa-php`.
 ### Requests
 When Amazon Alexa triggers your skill, a HTTP request will be sent to the URL you specified for your app.
 
-You can parse the `JSON` body of the request like so:
+You can get the `JSON` body of the request like so:
 ```php
-$jsonDataAsArray = $request->json()->all(); // This is how you would retrieve this with Laravel
-$alexaRequest = \Alexa\Request\Request::fromData($jsonDataAsArray);
+$rawRequest = $request->getContent; // This is how you would retrieve this with Laravel or Symfony 2.
+$alexa = new \Alexa\Request\Request($rawRequest);
+$alexaRequest = $alexa->fromData();
 ```
+
+The library expect raw request data, not parsed JSON as it needs to validate the request signature.
 
 You can determine the type of the request with `instanceof`, e.g.:
 ```php
