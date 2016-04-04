@@ -29,7 +29,7 @@ class Application {
  * @param $requestApplicationId
     Application ID from the Request (typically found in $data['session']['application']
  */
-	protected function validateApplicationId($requestApplicationId = "") {
+	public function validateApplicationId($requestApplicationId = "") {
 		object_log('request id', $requestApplicationId);
 		object_log('app id', $this->applicationId);
 		if (empty($requestApplicationId)) {
