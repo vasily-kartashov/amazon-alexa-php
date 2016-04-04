@@ -7,6 +7,7 @@ use InvalidArgumentException;
 use DateTime;
 
 use Alexa\Request\Certificate;
+use Alexa\Request\Application;
 
 class Request {
 
@@ -16,12 +17,13 @@ class Request {
 	public $session;
 	public $data;
 	public $rawData;
+	public $applicationid;
 
 	/**
 	 * Set up Request with RequestId, timestamp (DateTime) and user (User obj.)
 	 * @param type $data
 	 */
-	public function __construct($rawData) {
+	public function __construct($rawData, $applicationId) {
 		if (!is_string($rawData)) {
 			throw new InvalidArgumentException('Alexa Request requires the raw JSON data to validate request signature');
 		}
@@ -35,6 +37,8 @@ class Request {
 		$this->timestamp = new DateTime($data['request']['timestamp']);
 		$this->session = new Session($data['session']);
 
+		$this->applicationId = $applicationId;
+
 	}
 
 	/**
@@ -45,6 +49,16 @@ class Request {
 	public function setCertificateDependency(\Alexa\Request\Certificate $certificate) {
 		$this->certificate = $certificate;
 	}
+
+	/**
+	 * Accept the application validator dependency in order to allow people
+	 * to extend it.
+	 * @param \Alexa\Request\Application $application
+	 */
+	public function setApplicationDependency(\Alexa\Request\Application $application) {
+		$this->application = $application;
+	}
+
 	/**
 	 * Instance the correct type of Request, based on the $jons->request->type
 	 * value.
@@ -53,17 +67,24 @@ class Request {
 	 * @throws RuntimeException
 	 */
 	public function fromData() {
+		$data = $this->data;
+
 		// Instantiate a new Certificate validator if none is injected
 		// as our dependency.
 		if (!isset($this->certificate)) {
-			$certificate = new Certificate($_SERVER['HTTP_SIGNATURECERTCHAINURL'], $_SERVER['HTTP_SIGNATURE']);
+			$this->certificate = new Certificate($_SERVER['HTTP_SIGNATURECERTCHAINURL'], $_SERVER['HTTP_SIGNATURE']);
+		}
+		if (!isset($this->application)) {
+			$this->application = new Application($this->applicationId);
 		}
 
+		// We need to ensure that the request Application ID matches our Application ID.
+		$this->application->validateApplicationId($data['session']['application']['applicationId']);
+		// Validate that the request signature matches the certificate.
 		$this->certificate->validateRequest($this->rawData);
 
-		$data = $this->data;
-		$requestType = $data['request']['type'];
 
+		$requestType = $data['request']['type'];
 		if (!class_exists('\\Alexa\\Request\\' . $requestType)) {
 			throw new RuntimeException('Unknown request type: ' . $requestType);
 		}

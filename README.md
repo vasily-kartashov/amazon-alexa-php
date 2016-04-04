@@ -11,8 +11,9 @@ When Amazon Alexa triggers your skill, a HTTP request will be sent to the URL yo
 
 You can get the `JSON` body of the request like so:
 ```php
+$applicationId = "your-application-id-from-alexa"; // See developer.amazon.com and your Application. Will start with "amzn1.echo-sdk-ams.app."
 $rawRequest = $request->getContent; // This is how you would retrieve this with Laravel or Symfony 2.
-$alexa = new \Alexa\Request\Request($rawRequest);
+$alexa = new \Alexa\Request\Request($rawRequest, $applicationId);
 $alexaRequest = $alexa->fromData();
 ```
 
@@ -53,6 +54,18 @@ $alexa->setCertificateDependency($certificate);
 
 $alexaRequest = $alexa->fromData();
 ```
+
+### Application Id validation
+The library will automatically validate your Application Id matches the one of the incoming request - you don't need to do anything for that. If and only if you wish to change how the validation happens, you might use a similar scenario to the certificate validation - provide your own Application class extending the \Alexa\Request\Application and providing a validateApplicationId() function as part of that. Pass your application to the Request library in a same way as the certificate:
+```php
+
+$application = new MyAppApplication($myappId);
+$alexa = new \Alexa\Request\Request($rawRequest, $myappId);
+$alexa->setApplicationDependency($application);
+
+$alexaRequest = $alexa->fromData();
+```
+
 
 ### Response
 You can build an Alexa response with the `Response` class. You can optionally set a card or a reprompt too.
