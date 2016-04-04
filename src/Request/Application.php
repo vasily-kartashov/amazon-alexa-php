@@ -30,8 +30,6 @@ class Application {
     Application ID from the Request (typically found in $data['session']['application']
  */
 	public function validateApplicationId($requestApplicationId = "") {
-		object_log('request id', $requestApplicationId);
-		object_log('app id', $this->applicationId);
 		if (empty($requestApplicationId)) {
 			$requestApplicationId = $this->requestApplicationId;
 		}
