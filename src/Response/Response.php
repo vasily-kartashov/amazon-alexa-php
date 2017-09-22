@@ -4,20 +4,20 @@ namespace Alexa\Response;
 
 class Response
 {
-    private $version = '1.0';
+    public $version = '1.0';
 
-    private $sessionAttributes = [];
+    public $sessionAttributes = [];
 
     /** @var OutputSpeech|null */
-    private $outputSpeech = null;
+    public $outputSpeech = null;
 
     /** @var null|Card */
-    private $card = null;
+    public $card = null;
 
     /** @var null|Reprompt */
-    private $reprompt = null;
+    public $reprompt = null;
 
-    private $shouldEndSession = false;
+    public $shouldEndSession = false;
 
     public function __construct()
     {
