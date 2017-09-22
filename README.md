@@ -1,6 +1,18 @@
 # Amazon Alexa PHP Library
 
-This library provides provides a convient interface for developing Amazon Alexa Skills for your PHP app.
+This library provides provides some interface for developing Amazon Alexa Skills for your PHP app.
+
+Consider this library work in progress and subject to rather significant API changes in the nearest future.
+
+## Testing
+
+- `./vendor/bin/phpunit`
+- `./vendor/bin/phpstan analyse --level 5 src`
+
+
+
+
+
 
 ## Usage
 

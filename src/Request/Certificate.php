@@ -154,7 +154,7 @@ class Certificate
      */
     public function parseCertificate($certificate)
     {
-        return openssl_x509_parse($certificate);
+        return openssl_x509_parse($certificate, true);
     }
 
     /**
