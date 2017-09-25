@@ -22,7 +22,7 @@ class Request
     /**
      * Set up Request with RequestId, timestamp (DateTime) and user (User obj.)
      * @param $rawData
-     * @param null $applicationId
+     * @param mixed $applicationId
      */
     public function __construct($rawData, $applicationId = null)
     {
