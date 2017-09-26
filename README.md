@@ -1,5 +1,7 @@
 # Amazon Alexa PHP Library
 
+[![Build Status](https://travis-ci.org/vasily-kartashov/amazon-alexa-php.svg?branch=master)](https://travis-ci.org/vasily-kartashov/amazon-alexa-php)
+
 This library provides provides some interface for developing Amazon Alexa Skills for your PHP app.
 
 Consider this library work in progress and subject to rather significant API changes in the nearest future.
