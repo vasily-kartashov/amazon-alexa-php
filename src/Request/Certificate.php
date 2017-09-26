@@ -42,7 +42,7 @@ class Certificate
 
     public function validateRequest($requestData)
     {
-        $requestParsed = json_decode($requestData, TRUE);
+        $requestParsed = json_decode($requestData, true);
         // Validate the entire request by:
 
         // 1. Checking the timestamp.
@@ -183,5 +183,4 @@ class Certificate
         // Return the certificate contents;
         return $st;
     }
-
 }

@@ -4,10 +4,13 @@ This library provides provides some interface for developing Amazon Alexa Skills
 
 Consider this library work in progress and subject to rather significant API changes in the nearest future.
 
-## Testing
 
-- `./vendor/bin/phpunit`
-- `./vendor/bin/phpstan analyse --level 5 src`
+
+
+
+
+
+
 
 
 
@@ -106,3 +109,9 @@ header('Content-Type: application/json');
 echo json_encode($response->render());
 exit;
 ```
+
+## Roadmap
+
+- Remove public acess
+- Add more unit tests
+- Deprecate the old confusing API

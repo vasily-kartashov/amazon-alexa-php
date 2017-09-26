@@ -10,6 +10,7 @@ class Request
 {
     public $requestId;
     public $timestamp;
+
     /** @var Session */
     public $session;
     public $data;
@@ -31,7 +32,7 @@ class Request
         }
 
         // Decode the raw data into a JSON array.
-        $data = json_decode($rawData, TRUE);
+        $data = json_decode($rawData, true);
         $this->data = $data;
         $this->rawData = $rawData;
 
@@ -42,7 +43,6 @@ class Request
         $this->applicationId = (is_null($applicationId) && isset($data['session']['application']['applicationId']))
             ? $data['session']['application']['applicationId']
             : $applicationId;
-
     }
 
     /**
@@ -100,5 +100,4 @@ class Request
         $request = new $className($this->rawData);
         return $request;
     }
-
 }

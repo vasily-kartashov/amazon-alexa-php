@@ -63,5 +63,4 @@ class Session
             return $default;
         }
     }
-
 }
