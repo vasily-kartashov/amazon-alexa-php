@@ -10,13 +10,13 @@ class Session
     /** @var Application */
     public $application;
     public $sessionId;
-    public $attributes = array();
+    public $attributes = [];
 
     public function __construct($data)
     {
         $this->user = new User($data['user']);
-        $this->sessionId = isset($data['sessionId']) ? $data['sessionId'] : null;
-        $this->new = isset($data['new']) ? $data['new'] : null;
+        $this->sessionId = $data['sessionId'] ?? null;
+        $this->new = $data['new'] ?? null;
         if (!$this->new && isset($data['attributes'])) {
             $this->attributes = $data['attributes'];
         }

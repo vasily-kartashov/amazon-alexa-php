@@ -24,15 +24,34 @@ class Response
         $this->outputSpeech = new OutputSpeech;
     }
 
+    public function withOutputSpeech(OutputSpeech $speech): Response
+    {
+        $this->outputSpeech = $speech;
+        return $this;
+    }
+
+    public function withReprompt(OutputSpeech $speech): Response
+    {
+        $this->reprompt = new Reprompt($speech);
+        return $this;
+    }
+
+
+
+
+
+
+
+
     /**
      * Set output speech as text
      * @param string $text
      * @return Response
+     * @deprecated See withOutputSpeech()
      */
-    public function respond($text): Response
+    public function respond(string $text): Response
     {
-        $this->outputSpeech = new OutputSpeech;
-        $this->outputSpeech->text = $text;
+        $this->outputSpeech = OutputSpeech::plainText($text);
         return $this;
     }
 
@@ -40,12 +59,11 @@ class Response
      * Set up response with SSML.
      * @param string $ssml
      * @return Response
+     * @deprecated see withOutputSpeech
      */
-    public function respondSSML($ssml): Response
+    public function respondSSML(string $ssml): Response
     {
-        $this->outputSpeech = new OutputSpeech;
-        $this->outputSpeech->type = 'SSML';
-        $this->outputSpeech->ssml = $ssml;
+        $this->outputSpeech = OutputSpeech::ssml($ssml);
         return $this;
     }
 
@@ -53,11 +71,11 @@ class Response
      * Set up reprompt with given text
      * @param string $text
      * @return Response
+     * @deprecated see withReprompt
      */
     public function reprompt($text): Response
     {
-        $this->reprompt = new Reprompt;
-        $this->reprompt->outputSpeech->text = $text;
+        $this->reprompt = new Reprompt(OutputSpeech::plainText($text));
         return $this;
     }
 
@@ -65,12 +83,11 @@ class Response
      * Set up reprompt with given ssml
      * @param string $ssml
      * @return Response
+     * @deprecated see withReprompt
      */
     public function repromptSSML($ssml): Response
     {
-        $this->reprompt = new Reprompt;
-        $this->reprompt->outputSpeech->type = 'SSML';
-        $this->reprompt->outputSpeech->text = $ssml;
+        $this->reprompt = new Reprompt(OutputSpeech::ssml($ssml));
         return $this;
     }
 

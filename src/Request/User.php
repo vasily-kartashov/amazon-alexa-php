@@ -9,7 +9,17 @@ class User
 
     public function __construct($data)
     {
-        $this->userId = isset($data['userId']) ? $data['userId'] : null;
-        $this->accessToken = isset($data['accessToken']) ? $data['accessToken'] : null;
+        $this->userId = $data['userId'] ?? null;
+        $this->accessToken = $data['accessToken'] ?? null;
+    }
+
+    public function userId()
+    {
+        return $this->userId;
+    }
+
+    public function accessToken()
+    {
+        return $this->accessToken;
     }
 }
