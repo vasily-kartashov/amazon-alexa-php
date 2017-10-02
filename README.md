@@ -15,8 +15,9 @@ Install via composer: `vasily-kartashov/amazon-alexa-php`.
 - Remove public access
 - Add more unit tests
 - Deprecate the old confusing API
-
-
+- Add dependency on standard HTTP request object
+- Add LoggerAwareInterface
+- Extract Certificate validation authority and add cacheing to it
 
 
 ### Requests
