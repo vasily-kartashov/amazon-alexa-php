@@ -6,22 +6,18 @@ This library provides provides some interface for developing Amazon Alexa Skills
 
 Consider this library work in progress and subject to rather significant API changes in the nearest future.
 
+## Usage 
+
+Install via composer: `vasily-kartashov/amazon-alexa-php`.
+
+### Roadmap
+
+- Remove public access
+- Add more unit tests
+- Deprecate the old confusing API
 
 
 
-
-
-
-
-
-
-
-
-
-
-## Usage
-
-Install via composer: `composer require minicodemonkey/amazon-alexa-php`.
 
 ### Requests
 When Amazon Alexa triggers your skill, a HTTP request will be sent to the URL you specified for your app.
@@ -112,8 +108,3 @@ echo json_encode($response->render());
 exit;
 ```
 
-## Roadmap
-
-- Remove public acess
-- Add more unit tests
-- Deprecate the old confusing API
