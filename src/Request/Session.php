@@ -2,14 +2,23 @@
 
 namespace Alexa\Request;
 
+use Exception;
+
 class Session
 {
     /** @var User */
     public $user;
+
+    /** @var bool|null */
     public $new;
+
     /** @var Application */
     public $application;
+
+    /** @var string|null */
     public $sessionId;
+
+    /** @var array */
     public $attributes = [];
 
     public function __construct($data)
@@ -41,9 +50,14 @@ class Session
     /**
      * Open PHP SESSION using amazon provided sessionId, for storing data about the session.
      * Session cookie won't be sent.
+     * @return bool
+     * @throws Exception
      */
-    public function openSession()
+    public function openSession(): bool
     {
+        if ($this->sessionId === null) {
+            throw new Exception('Session ID not present');
+        }
         ini_set('session.use_cookies', 0); # disable session cookies
         session_id($this->parseSessionId($this->sessionId));
         return session_start();

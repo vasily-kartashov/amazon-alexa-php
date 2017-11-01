@@ -13,7 +13,10 @@ use InvalidArgumentException;
 
 class Application
 {
+    /** @var array|false|string[] */
     public $applicationId;
+
+    /** @var string|null */
     public $requestApplicationId;
 
     public function __construct($applicationId)

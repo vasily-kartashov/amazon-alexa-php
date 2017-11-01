@@ -4,6 +4,7 @@ namespace Alexa\Request;
 
 class SessionEndedRequest extends Request
 {
+    /** @var string */
     public $reason;
 
     public function __construct($rawData)

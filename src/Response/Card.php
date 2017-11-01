@@ -4,10 +4,18 @@ namespace Alexa\Response;
 
 class Card
 {
+    /** @var string */
     public $type = 'Simple';
+
+    /** @var string */
     public $title = '';
+
+    /** @var string */
     public $content = '';
 
+    /**
+     * @return array<string,string>
+     */
     public function render(): array
     {
         return [

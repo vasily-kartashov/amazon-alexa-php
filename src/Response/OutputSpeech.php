@@ -10,10 +10,19 @@ class OutputSpeech
     const TYPE_PLAIN_TEXT = 'PlainText';
     const TYPE_SSML = 'SSML';
 
+    /** @var string */
     public $type = OutputSpeech::TYPE_PLAIN_TEXT;
+
+    /** @var string */
     public $text = '';
+
+    /** @var string */
     public $ssml = '';
 
+    /**
+     * @return array<string,string>
+     * @throws Exception
+     */
     public function render(): array
     {
         switch ($this->type) {

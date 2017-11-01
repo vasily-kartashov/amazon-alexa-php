@@ -36,13 +36,6 @@ class Response
         return $this;
     }
 
-
-
-
-
-
-
-
     /**
      * Set output speech as text
      * @param string $text
