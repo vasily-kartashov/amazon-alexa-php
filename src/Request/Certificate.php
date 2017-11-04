@@ -111,21 +111,21 @@ class Certificate
 
     /**
      * @param string $requestData
-     * @throws InvalidArgumentException
+     * @throws AlexaException
      * @return void
      */
     public function validateRequestSignature($requestData)
     {
         if ($this->certificateContent === null) {
-            throw new InvalidArgumentException('Empty certificate content');
+            throw new AlexaException('Empty certificate content');
         }
         if ($this->requestSignature === null) {
-            throw new InvalidArgumentException('Empty request signature');
+            throw new AlexaException('Empty request signature');
         }
         $certKey = openssl_pkey_get_public($this->certificateContent);
         $valid = openssl_verify($requestData, base64_decode($this->requestSignature), $certKey, self::ENCRYPT_METHOD);
         if (!$valid) {
-            throw new InvalidArgumentException('Request signature could not be verified');
+            throw new AlexaException('Request signature could not be verified');
         }
     }
 
@@ -161,8 +161,9 @@ class Certificate
     /**
      * Verify URL of the certificate
      * @return void
-     * @throws InvalidArgumentException
+     * @throws AlexaException
      * @author Emanuele Corradini <emanuele@evensi.com>
+     * @todo use simple booleans
      */
     public function verifySignatureCertificateURL()
     {
@@ -172,13 +173,13 @@ class Certificate
         $url = parse_url($this->certificateUrl);
 
         if ($url['scheme'] !== static::SIGNATURE_VALID_PROTOCOL) {
-            throw new InvalidArgumentException('Protocol isn\'t secure. Request isn\'t from Alexa.');
-        } else if ($url['host'] !== static::SIGNATURE_VALID_HOSTNAME) {
-            throw new InvalidArgumentException('Certificate isn\'t from Amazon. Request isn\'t from Alexa.');
-        } else if (strpos($url['path'], static::SIGNATURE_VALID_PATH) !== 0) {
-            throw new InvalidArgumentException('Certificate isn\'t in "' . static::SIGNATURE_VALID_PATH . '" folder. Request isn\'t from Alexa.');
-        } else if (isset($url['port']) && $url['port'] !== static::SIGNATURE_VALID_PORT) {
-            throw new InvalidArgumentException('Port isn\'t ' . static::SIGNATURE_VALID_PORT . '. Request isn\'t from Alexa.');
+            throw new AlexaException('Invalid protocol');
+        } elseif ($url['host'] !== static::SIGNATURE_VALID_HOSTNAME) {
+            throw new AlexaException('Invalid hostname');
+        } elseif (strpos($url['path'], static::SIGNATURE_VALID_PATH) !== 0) {
+            throw new AlexaException('Invalid path');
+        } elseif (isset($url['port']) && $url['port'] !== static::SIGNATURE_VALID_PORT) {
+            throw new AlexaException('Invalid port');
         }
     }
 

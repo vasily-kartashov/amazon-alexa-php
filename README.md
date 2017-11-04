@@ -4,7 +4,7 @@
 
 This library provides provides some interface for developing Amazon Alexa Skills for your PHP app.
 
-Consider this library work in progress and subject to rather significant API changes in the nearest future.
+Consider this library work in progress and subject to rather significant API changes in the nearest future. Current implementation is garbage, but there's almost no alternative out there.
 
 ## Usage 
 
@@ -16,6 +16,7 @@ Install via composer: `vasily-kartashov/amazon-alexa-php`.
 - Add more unit tests
 - Deprecate the old confusing API
 - Add dependency on standard HTTP request object
+- Stop throwing exceptions around
 - Add LoggerAwareInterface
 - Extract Certificate validation authority and add cacheing to it
 
