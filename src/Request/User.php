@@ -10,6 +10,11 @@ class User
     /** @var string|null */
     public $accessToken;
 
+    /**
+     * User constructor.
+     * @param array $data
+     * @psalm-param array<string,string>
+     */
     public function __construct($data)
     {
         $this->userId = $data['userId'] ?? null;

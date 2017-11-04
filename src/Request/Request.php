@@ -3,21 +3,34 @@
 namespace Alexa\Request;
 
 use DateTime;
+use Exception;
 use InvalidArgumentException;
 use RuntimeException;
 
 class Request
 {
+    /** @var string */
     public $requestId;
+
+    /** @var DateTime */
     public $timestamp;
 
     /** @var Session */
     public $session;
+
+    /** @var array */
     public $data;
+
+    /** @var string */
     public $rawData;
+
+    /** @var string|null */
     public $applicationId;
 
+    /** @var Certificate|null */
     private $certificate;
+
+    /** @var Application|null */
     private $application;
 
     /**
@@ -49,6 +62,7 @@ class Request
      * Accept the certificate validator dependency in order to allow people
      * to extend it to for example cache their certificates.
      * @param Certificate $certificate
+     * @return void
      */
     public function setCertificateDependency(Certificate $certificate)
     {
@@ -59,6 +73,7 @@ class Request
      * Accept the application validator dependency in order to allow people
      * to extend it.
      * @param Application $application
+     * @return void
      */
     public function setApplicationDependency(Application $application)
     {
@@ -80,12 +95,17 @@ class Request
         if (!isset($this->certificate)) {
             $this->certificate = new Certificate($_SERVER['HTTP_SIGNATURECERTCHAINURL'], $_SERVER['HTTP_SIGNATURE']);
         }
-        if (!isset($this->application)) {
+        if ($this->application === null && $this->applicationId !== null) {
             $this->application = new Application($this->applicationId);
+        }
+
+        if ($this->application === null) {
+            throw new RuntimeException('Application is not initialized');
         }
 
         // We need to ensure that the request Application ID matches our Application ID.
         $this->application->validateApplicationId($data['session']['application']['applicationId']);
+
         // Validate that the request signature matches the certificate.
         $this->certificate->validateRequest($this->rawData);
 
@@ -94,7 +114,6 @@ class Request
         if (!class_exists('\\Alexa\\Request\\' . $requestType)) {
             throw new RuntimeException('Unknown request type: ' . $requestType);
         }
-
         $className = '\\Alexa\\Request\\' . $requestType;
 
         $request = new $className($this->rawData);

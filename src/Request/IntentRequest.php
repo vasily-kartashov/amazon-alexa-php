@@ -10,6 +10,9 @@ class IntentRequest extends Request
     /** @var array */
     public $slots = [];
 
+    /**
+     * @param string $rawData
+     */
     public function __construct($rawData)
     {
         parent::__construct($rawData);

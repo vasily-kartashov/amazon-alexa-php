@@ -21,6 +21,9 @@ class Session
     /** @var array */
     public $attributes = [];
 
+    /**
+     * @param array $data
+     */
     public function __construct($data)
     {
         $this->user = new User($data['user']);

@@ -9,21 +9,35 @@
 
 namespace Alexa\Request;
 
+use Exception;
 use InvalidArgumentException;
 
 class Application
 {
-    /** @var array|false|string[] */
+    /** @var string[] */
     public $applicationId;
 
     /** @var string|null */
     public $requestApplicationId;
 
+    /**
+     * Application constructor.
+     * @param string $applicationId
+     * @throws \Exception
+     */
     public function __construct($applicationId)
     {
-        $this->applicationId = preg_split('/,/', $applicationId);
+        $tokens = preg_split('/,/', $applicationId);
+        if ($applicationId === false) {
+            throw new Exception('Invalid application ID');
+        }
+        $this->applicationId = $tokens;
     }
 
+    /**
+     * @param string $applicationId
+     * @return void
+     */
     public function setRequestApplicationId($applicationId)
     {
         $this->requestApplicationId = $applicationId;
@@ -32,6 +46,7 @@ class Application
     /**
      * Validate that the request Application ID matches our Application. This is required as per Amazon requirements.
      * @param string $requestApplicationId Application ID from the Request (typically found in $data['session']['application']
+     * @return void
      */
     public function validateApplicationId($requestApplicationId = '')
     {

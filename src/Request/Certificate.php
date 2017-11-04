@@ -8,6 +8,7 @@
 namespace Alexa\Request;
 
 use DateTime;
+use Exception;
 use InvalidArgumentException;
 
 class Certificate
@@ -20,14 +21,28 @@ class Certificate
     const ECHO_SERVICE_DOMAIN = 'echo-api.amazon.com';
     const ENCRYPT_METHOD = "sha1WithRSAEncryption";
 
+    /** @var string */
     public $requestId;
+
+    /** @var mixed */
     public $timestamp;
+
     /** @var Session */
     public $session;
+
+    /** @var string|null */
     public $certificateUrl;
+
+    /** @var string|null */
     public $certificateFile;
+
+    /** @var string|null */
     public $certificateContent;
+
+    /** @var string|null */
     public $requestSignature;
+
+    /** @var mixed */
     public $requestData;
 
     /**
@@ -40,6 +55,10 @@ class Certificate
         $this->requestSignature = $signature;
     }
 
+    /**
+     * @param string $requestData
+     * @return void
+     */
     public function validateRequest($requestData)
     {
         $requestParsed = json_decode($requestData, true);
@@ -61,6 +80,7 @@ class Certificate
     /**
      * Check if request is within the allowed time.
      * @param $timestamp
+     * @return void
      */
     public function validateTimestamp($timestamp)
     {
@@ -73,24 +93,36 @@ class Certificate
         }
     }
 
+    /**
+     * @return void
+     * @throws Exception
+     */
     public function validateCertificate()
     {
         $this->certificateContent = $this->getCertificate();
         $parsedCertificate = $this->parseCertificate($this->certificateContent);
-
+        if ($parsedCertificate === false) {
+            throw new Exception('Cannot parse certificate');
+        }
         if (!$this->validateCertificateDate($parsedCertificate) || !$this->validateCertificateSAN($parsedCertificate, static::ECHO_SERVICE_DOMAIN)) {
             throw new InvalidArgumentException("The remote certificate doesn't contain a valid SANs in the signature or is expired.");
         }
     }
 
-    /*
-     * @params $requestData
+    /**
+     * @param string $requestData
      * @throws InvalidArgumentException
+     * @return void
      */
     public function validateRequestSignature($requestData)
     {
+        if ($this->certificateContent === null) {
+            throw new InvalidArgumentException('Empty certificate content');
+        }
+        if ($this->requestSignature === null) {
+            throw new InvalidArgumentException('Empty request signature');
+        }
         $certKey = openssl_pkey_get_public($this->certificateContent);
-
         $valid = openssl_verify($requestData, base64_decode($this->requestSignature), $certKey, self::ENCRYPT_METHOD);
         if (!$valid) {
             throw new InvalidArgumentException('Request signature could not be verified');
@@ -128,11 +160,15 @@ class Certificate
 
     /**
      * Verify URL of the certificate
+     * @return void
      * @throws InvalidArgumentException
      * @author Emanuele Corradini <emanuele@evensi.com>
      */
     public function verifySignatureCertificateURL()
     {
+        if ($this->certificateUrl === null) {
+            throw new InvalidArgumentException('Certificate URL not set');
+        }
         $url = parse_url($this->certificateUrl);
 
         if ($url['scheme'] !== static::SIGNATURE_VALID_PROTOCOL) {
@@ -151,6 +187,7 @@ class Certificate
      * Parse the X509 certificate
      * @param mixed $certificate certificate contents
      * @return array
+     * @psalm-return array<mixed, mixed>|false
      */
     public function parseCertificate($certificate)
     {
@@ -160,6 +197,7 @@ class Certificate
     /**
      * Return the certificate to the underlying code by fetching it from its location.
      * Override this function if you wish to cache the certificate for a specific time.
+     * @return string
      */
     public function getCertificate()
     {
@@ -168,6 +206,8 @@ class Certificate
 
     /**
      * Perform the actual download of the certificate
+     * @return string
+     * @throws Exception
      */
     public function fetchCertificate()
     {
@@ -175,12 +215,16 @@ class Certificate
             throw new InvalidArgumentException('CURL is required to download the Signature Certificate.');
         }
         $ch = curl_init();
+        if ($ch === false) {
+            throw new Exception('Cannot initialize CURL');
+        }
         curl_setopt($ch, CURLOPT_URL, $this->certificateUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $st = curl_exec($ch);
+        $payload = curl_exec($ch);
         curl_close($ch);
-
-        // Return the certificate contents;
-        return $st;
+        if (is_bool($payload)) {
+            throw new Exception('Cannot load certificate');
+        }
+        return $payload;
     }
 }

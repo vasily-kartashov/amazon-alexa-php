@@ -4,8 +4,10 @@ namespace Alexa\Response;
 
 class Response
 {
+    /** @var string */
     public $version = '1.0';
 
+    /** @var array */
     public $sessionAttributes = [];
 
     /** @var OutputSpeech|null */
@@ -17,6 +19,7 @@ class Response
     /** @var null|Reprompt */
     public $reprompt = null;
 
+    /** @var bool */
     public $shouldEndSession = false;
 
     public function __construct()
