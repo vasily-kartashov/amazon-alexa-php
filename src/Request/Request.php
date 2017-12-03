@@ -35,7 +35,7 @@ class Request
 
     /**
      * Set up Request with RequestId, timestamp (DateTime) and user (User obj.)
-     * @param $rawData
+     * @param string $rawData
      * @param mixed $applicationId
      */
     public function __construct($rawData, $applicationId = null)
@@ -81,10 +81,9 @@ class Request
     }
 
     /**
-     * Instance the correct type of Request, based on the $json->request->type
-     * value.
+     * Instance the correct type of Request, based on the $json->request->type value.
      * @return \Alexa\Request\Request base class
-     * @throws RuntimeException
+     * @throws AlexaException
      */
     public function fromData()
     {
@@ -100,7 +99,7 @@ class Request
         }
 
         if ($this->application === null) {
-            throw new RuntimeException('Application is not initialized');
+            throw new AlexaException('Application is not initialized');
         }
 
         // We need to ensure that the request Application ID matches our Application ID.
@@ -112,7 +111,7 @@ class Request
 
         $requestType = $data['request']['type'];
         if (!class_exists('\\Alexa\\Request\\' . $requestType)) {
-            throw new RuntimeException('Unknown request type: ' . $requestType);
+            throw new AlexaException('Unknown request type: ' . $requestType);
         }
         $className = '\\Alexa\\Request\\' . $requestType;
 

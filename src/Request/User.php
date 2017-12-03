@@ -13,7 +13,7 @@ class User
     /**
      * User constructor.
      * @param array $data
-     * @psalm-param array<string,string>
+     * @psalm-param array<string,string> $data
      */
     public function __construct($data)
     {

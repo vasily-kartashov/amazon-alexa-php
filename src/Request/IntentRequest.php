@@ -7,7 +7,10 @@ class IntentRequest extends Request
     /** @var string */
     public $intentName;
 
-    /** @var array */
+    /**
+     * @var array
+     * @psalm-var array<string,mixed>
+     */
     public $slots = [];
 
     /**
@@ -23,7 +26,8 @@ class IntentRequest extends Request
         if (isset($data['request']['intent']['slots'])) {
             foreach ($data['request']['intent']['slots'] as $slot) {
                 if (isset($slot['value'])) {
-                    $this->slots[$slot['name']] = $slot['value'];
+                    $name = (string) $slot['name'];
+                    $this->slots[$name] = $slot['value'];
                 }
             }
         }

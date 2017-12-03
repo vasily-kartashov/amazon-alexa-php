@@ -46,8 +46,8 @@ class Certificate
     public $requestData;
 
     /**
-     * @param $certificateUrl
-     * @param $signature
+     * @param string|null $certificateUrl
+     * @param string|null $signature
      */
     public function __construct($certificateUrl, $signature)
     {
@@ -58,6 +58,7 @@ class Certificate
     /**
      * @param string $requestData
      * @return void
+     * @throws AlexaException
      */
     public function validateRequest($requestData)
     {
@@ -79,7 +80,7 @@ class Certificate
 
     /**
      * Check if request is within the allowed time.
-     * @param $timestamp
+     * @param string $timestamp
      * @return void
      */
     public function validateTimestamp($timestamp)
@@ -95,16 +96,17 @@ class Certificate
 
     /**
      * @return void
-     * @throws Exception
+     * @throws AlexaException
      */
     public function validateCertificate()
     {
         $this->certificateContent = $this->getCertificate();
         $parsedCertificate = $this->parseCertificate($this->certificateContent);
         if ($parsedCertificate === false) {
-            throw new Exception('Cannot parse certificate');
+            throw new AlexaException('Cannot parse certificate');
         }
-        if (!$this->validateCertificateDate($parsedCertificate) || !$this->validateCertificateSAN($parsedCertificate, static::ECHO_SERVICE_DOMAIN)) {
+        if (!$this->validateCertificateDate($parsedCertificate) ||
+            !$this->validateCertificateSAN($parsedCertificate, static::ECHO_SERVICE_DOMAIN)) {
             throw new InvalidArgumentException("The remote certificate doesn't contain a valid SANs in the signature or is expired.");
         }
     }
@@ -146,7 +148,7 @@ class Certificate
     /**
      * Returns true if the configured service domain is present/valid, false if invalid/not present
      * @param array $parsedCertificate
-     * @param $amazonServiceDomain
+     * @param string $amazonServiceDomain
      * @return bool
      */
     public function validateCertificateSAN(array $parsedCertificate, $amazonServiceDomain)
@@ -187,7 +189,7 @@ class Certificate
     /**
      * Parse the X509 certificate
      * @param mixed $certificate certificate contents
-     * @return array
+     * @return array|false
      * @psalm-return array<mixed, mixed>|false
      */
     public function parseCertificate($certificate)
@@ -199,6 +201,7 @@ class Certificate
      * Return the certificate to the underlying code by fetching it from its location.
      * Override this function if you wish to cache the certificate for a specific time.
      * @return string
+     * @throws AlexaException
      */
     public function getCertificate()
     {
@@ -208,7 +211,7 @@ class Certificate
     /**
      * Perform the actual download of the certificate
      * @return string
-     * @throws Exception
+     * @throws AlexaException
      */
     public function fetchCertificate()
     {
@@ -217,14 +220,14 @@ class Certificate
         }
         $ch = curl_init();
         if ($ch === false) {
-            throw new Exception('Cannot initialize CURL');
+            throw new AlexaException('Cannot initialize CURL');
         }
         curl_setopt($ch, CURLOPT_URL, $this->certificateUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $payload = curl_exec($ch);
         curl_close($ch);
         if (is_bool($payload)) {
-            throw new Exception('Cannot load certificate');
+            throw new AlexaException('Cannot load certificate');
         }
         return $payload;
     }

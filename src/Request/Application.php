@@ -9,8 +9,6 @@
 
 namespace Alexa\Request;
 
-use InvalidArgumentException;
-
 class Application
 {
     /** @var string[] */
@@ -22,15 +20,10 @@ class Application
     /**
      * Application constructor.
      * @param string $applicationId
-     * @throws AlexaException
      */
     public function __construct(string $applicationId)
     {
-        $tokens = preg_split('/,/', $applicationId);
-        if ($applicationId === false) {
-            throw new AlexaException('Invalid application ID');
-        }
-        $this->applicationId = $tokens;
+        $this->applicationId = preg_split('/,/', $applicationId);
     }
 
     /**
