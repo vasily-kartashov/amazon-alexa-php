@@ -2701,16 +2701,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "9468ad3fba3a5e1f0dc12a96e50e84cddb923cf0"
+                "reference": "2cdef78de8f54f68ff16a857e710e7302b47d4c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/9468ad3fba3a5e1f0dc12a96e50e84cddb923cf0",
-                "reference": "9468ad3fba3a5e1f0dc12a96e50e84cddb923cf0",
+                "url": "https://api.github.com/repos/symfony/console/zipball/2cdef78de8f54f68ff16a857e710e7302b47d4c7",
+                "reference": "2cdef78de8f54f68ff16a857e710e7302b47d4c7",
                 "shasum": ""
             },
             "require": {
@@ -2766,11 +2766,11 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-11-29T13:28:14+00:00"
+            "time": "2017-12-02T18:20:11+00:00"
         },
         {
             "name": "symfony/debug",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
@@ -2826,7 +2826,7 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
@@ -2875,7 +2875,7 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
@@ -2983,7 +2983,7 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
@@ -3072,16 +3072,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "0.3.64",
+            "version": "0.3.65",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "3b2a1d4a3ea6d7f4d72f4ab8cb7361682d3454ce"
+                "reference": "de09bd846c59be5aac50c96b71fbabffb20b8848"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/3b2a1d4a3ea6d7f4d72f4ab8cb7361682d3454ce",
-                "reference": "3b2a1d4a3ea6d7f4d72f4ab8cb7361682d3454ce",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/de09bd846c59be5aac50c96b71fbabffb20b8848",
+                "reference": "de09bd846c59be5aac50c96b71fbabffb20b8848",
                 "shasum": ""
             },
             "require": {
@@ -3120,7 +3120,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2017-11-25T17:31:01+00:00"
+            "time": "2017-12-04T13:50:59+00:00"
         },
         {
             "name": "webmozart/assert",

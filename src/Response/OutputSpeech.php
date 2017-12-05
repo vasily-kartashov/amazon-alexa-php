@@ -55,6 +55,7 @@ class OutputSpeech
         $speech->type = OutputSpeech::TYPE_SSML;
         libxml_use_internal_errors(true);
         $result = simplexml_load_string($ssml);
+        /** @psalm-suppress RedundantCondition */
         if (!$result) {
             foreach (libxml_get_errors() as $error) {
                 throw new InvalidArgumentException($error->message);
