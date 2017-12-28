@@ -2,6 +2,8 @@
 
 namespace Alexa\Response;
 
+use Exception;
+
 class Reprompt
 {
     /** @var OutputSpeech */
@@ -14,6 +16,8 @@ class Reprompt
 
     /**
      * @return array<string,array<string,string>>
+     * @psalm-return array{outputSpeech:array{type:string,text:string}|array{type:string,ssml:string}}
+     * @throws Exception
      */
     public function render(): array
     {

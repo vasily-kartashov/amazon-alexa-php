@@ -14,7 +14,8 @@ class Card
     public $content = '';
 
     /**
-     * @return array<string,string>
+     * @return string[]
+     * @psalm-return array{type:string, title:string, content:string}
      */
     public function render(): array
     {

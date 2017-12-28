@@ -10,8 +10,11 @@ class ApplicationTest extends TestCase
     public function testValidApplicationId()
     {
         $application = new Application('a,b,c');
+        /** @noinspection PhpUnhandledExceptionInspection */
         $application->validateApplicationId('a');
+        /** @noinspection PhpUnhandledExceptionInspection */
         $application->validateApplicationId('b');
+        /** @noinspection PhpUnhandledExceptionInspection */
         $application->validateApplicationId('c');
 
         Assert::assertTrue(true);

@@ -2,12 +2,17 @@
 
 namespace Alexa\Response;
 
+use Exception;
+
 class Response
 {
     /** @var string */
     public $version = '1.0';
 
-    /** @var array */
+    /**
+     * @var array
+     * @psalm-var array<sting,mixed>
+     */
     public $sessionAttributes = [];
 
     /** @var OutputSpeech|null */
@@ -93,7 +98,7 @@ class Response
      * @param string $content
      * @return Response
      */
-    public function withCard($title, $content = ''): Response
+    public function withCard(string $title, string $content = ''): Response
     {
         $this->card = new Card;
         $this->card->title = $title;
@@ -106,7 +111,7 @@ class Response
      * @param bool $shouldEndSession
      * @return Response
      */
-    public function endSession($shouldEndSession = true): Response
+    public function endSession(bool $shouldEndSession = true): Response
     {
         $this->shouldEndSession = $shouldEndSession;
         return $this;
@@ -118,7 +123,7 @@ class Response
      * @param mixed $value
      * @return Response
      */
-    public function addSessionAttribute($key, $value): Response
+    public function addSessionAttribute(string $key, $value): Response
     {
         $this->sessionAttributes[$key] = $value;
         return $this;
@@ -127,6 +132,17 @@ class Response
     /**
      * Return the response as an array
      * @return array
+     * @psalm-return array{
+     *   version:string,
+     *   sessionAttributes:array<mixed, mixed>,
+     *   response:array{
+     *     outputSpeech:array{type:string, text:string, ssml:string}|null,
+     *     card:array{type:string, title:string, content:string}|null,
+     *     reprompt:array{outputSpeech:array{type:string, text:string, ssml:string}}|null,
+     *     shouldEndSession:bool
+     *   }
+     * }
+     * @throws Exception
      */
     public function render()
     {

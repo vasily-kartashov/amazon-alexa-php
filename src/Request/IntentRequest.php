@@ -35,8 +35,7 @@ class IntentRequest extends Request
 
 
     /**
-     * Returns the value for the requested intent slot, or $default if not
-     * found.
+     * Returns the value for the requested intent slot, or $default if not found.
      * @param string $name
      * @param mixed $default
      * @return mixed

@@ -20,7 +20,8 @@ class OutputSpeech
     public $ssml = '';
 
     /**
-     * @return array<string,string>
+     * @return string[]
+     * @psalm-return array{type:string,text:string}|array{type:string,ssml:string}
      * @throws Exception
      */
     public function render(): array
