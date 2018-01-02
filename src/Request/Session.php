@@ -23,7 +23,14 @@ class Session
 
     /**
      * @param array $data
-     * @psalm-param array{user:array,sessionId:string|null,new:bool|null,attributes:array}
+     * @psalm-param array{
+     *   user:array{
+     *     userId:string|null,
+     *     accessToken:string|null
+     *   },
+     *   sessionId:string|null,
+     *   new:bool|null,attributes:array
+     * } $data
      */
     public function __construct(array $data)
     {
