@@ -19,12 +19,10 @@ class IntentRequest extends Request
     public function __construct($rawData)
     {
         parent::__construct($rawData);
-        $data = $this->data;
 
-        $this->intentName = $data['request']['intent']['name'];
-
-        if (isset($data['request']['intent']['slots'])) {
-            foreach ($data['request']['intent']['slots'] as $slot) {
+        $this->intentName = $this->data['request']['intent']['name'];
+        if (isset($this->data['request']['intent']['slots'])) {
+            foreach ($this->data['request']['intent']['slots'] as $slot) {
                 if (isset($slot['value'])) {
                     $name = (string) $slot['name'];
                     $this->slots[$name] = $slot['value'];

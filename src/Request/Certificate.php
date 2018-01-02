@@ -8,8 +8,6 @@
 namespace Alexa\Request;
 
 use DateTime;
-use Exception;
-use InvalidArgumentException;
 
 class Certificate
 {
@@ -90,7 +88,7 @@ class Certificate
         $differenceInSeconds = $now->getTimestamp() - $timestamp->getTimestamp();
 
         if ($differenceInSeconds > self::TIMESTAMP_VALID_TOLERANCE_SECONDS) {
-            throw new InvalidArgumentException('Request timestamp was too old. Possible replay attack.');
+            throw new AlexaException('Request timestamp was too old. Possible replay attack.');
         }
     }
 
@@ -107,7 +105,7 @@ class Certificate
         }
         if (!$this->validateCertificateDate($parsedCertificate) ||
             !$this->validateCertificateSAN($parsedCertificate, static::ECHO_SERVICE_DOMAIN)) {
-            throw new InvalidArgumentException("The remote certificate doesn't contain a valid SANs in the signature or is expired.");
+            throw new AlexaException("The remote certificate doesn't contain a valid SANs in the signature or is expired.");
         }
     }
 
@@ -170,7 +168,7 @@ class Certificate
     public function verifySignatureCertificateURL()
     {
         if ($this->certificateUrl === null) {
-            throw new InvalidArgumentException('Certificate URL not set');
+            throw new AlexaException('Certificate URL not set');
         }
         $url = parse_url($this->certificateUrl);
 
@@ -216,7 +214,7 @@ class Certificate
     public function fetchCertificate()
     {
         if (!function_exists("curl_init")) {
-            throw new InvalidArgumentException('CURL is required to download the Signature Certificate.');
+            throw new AlexaException('CURL is required to download the Signature Certificate.');
         }
         $ch = curl_init();
         if ($ch === false) {

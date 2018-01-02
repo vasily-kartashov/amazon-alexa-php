@@ -2,8 +2,8 @@
 
 namespace Alexa\Request;
 
-use Exception;
+use RuntimeException;
 
-class AlexaException extends Exception
+class AlexaException extends RuntimeException
 {
 }

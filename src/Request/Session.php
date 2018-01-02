@@ -23,8 +23,9 @@ class Session
 
     /**
      * @param array $data
+     * @psalm-param array{user:array,sessionId:string|null,new:bool|null,attributes:array}
      */
-    public function __construct($data)
+    public function __construct(array $data)
     {
         $this->user = new User($data['user']);
         $this->sessionId = $data['sessionId'] ?? null;
@@ -54,12 +55,11 @@ class Session
      * Open PHP SESSION using amazon provided sessionId, for storing data about the session.
      * Session cookie won't be sent.
      * @return bool
-     * @throws Exception
      */
     public function openSession(): bool
     {
         if ($this->sessionId === null) {
-            throw new Exception('Session ID not present');
+            throw new AlexaException('Session ID not present');
         }
         ini_set('session.use_cookies', 0); # disable session cookies
         session_id($this->parseSessionId($this->sessionId));

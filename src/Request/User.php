@@ -15,7 +15,7 @@ class User
      * @param array $data
      * @psalm-param array<string,string> $data
      */
-    public function __construct($data)
+    public function __construct(array $data)
     {
         $this->userId = $data['userId'] ?? null;
         $this->accessToken = $data['accessToken'] ?? null;
