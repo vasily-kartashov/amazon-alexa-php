@@ -116,6 +116,9 @@ class Request
         $className = '\\Alexa\\Request\\' . $requestType;
 
         $request = new $className($this->rawData);
-        return $request;
+        if ($request instanceof Request) {
+            return $request;
+        }
+        throw new AlexaException('Invalid request class');
     }
 }
