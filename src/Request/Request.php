@@ -118,7 +118,8 @@ class Request
         $request = new $className($this->rawData);
         if ($request instanceof Request) {
             return $request;
+        } else {
+            throw new AlexaException('Invalid request class');
         }
-        throw new AlexaException('Invalid request class');
     }
 }
