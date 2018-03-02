@@ -15,7 +15,7 @@ class Reprompt
     }
 
     /**
-     * @return array<string,array<string,string>>
+     * @return array[]
      * @psalm-return array{outputSpeech:array{type:string,text:string}|array{type:string,ssml:string}}
      * @throws Exception
      */

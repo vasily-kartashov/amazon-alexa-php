@@ -11,7 +11,7 @@ class Response
 
     /**
      * @var array
-     * @psalm-var array<sting,mixed>
+     * @psalm-var array<string,mixed>
      */
     public $sessionAttributes = [];
 
@@ -134,11 +134,11 @@ class Response
      * @return array
      * @psalm-return array{
      *   version:string,
-     *   sessionAttributes:array<mixed, mixed>,
+     *   sessionAttributes:array<string, mixed>,
      *   response:array{
-     *     outputSpeech:array{type:string, text:string, ssml:string}|null,
+     *     outputSpeech:array{type:string,text:string}|array{type:string,ssml:string}|null,
      *     card:array{type:string, title:string, content:string}|null,
-     *     reprompt:array{outputSpeech:array{type:string, text:string, ssml:string}}|null,
+     *     reprompt:array{outputSpeech:array{type:string,text:string}|array{type:string,ssml:string}}|null,
      *     shouldEndSession:bool
      *   }
      * }

@@ -28,11 +28,13 @@ class OutputSpeech
     {
         switch ($this->type) {
             case OutputSpeech::TYPE_PLAIN_TEXT:
+                /** @psalm-suppress InvalidReturnStatement */
                 return [
                     'type' => OutputSpeech::TYPE_PLAIN_TEXT,
                     'text' => $this->text
                 ];
             case OutputSpeech::TYPE_SSML:
+                /** @psalm-suppress InvalidReturnStatement */
                 return [
                     'type' => OutputSpeech::TYPE_SSML,
                     'ssml' => $this->ssml
