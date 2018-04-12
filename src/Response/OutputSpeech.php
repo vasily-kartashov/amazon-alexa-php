@@ -58,7 +58,7 @@ class OutputSpeech
         $speech->type = OutputSpeech::TYPE_SSML;
         libxml_use_internal_errors(true);
         $result = simplexml_load_string($ssml);
-        if ($result !== false) {
+        if ($result === false) {
             foreach (libxml_get_errors() as $error) {
                 throw new InvalidArgumentException($error->message);
             }
