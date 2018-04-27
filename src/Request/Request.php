@@ -24,6 +24,9 @@ class Request
     /** @var string */
     public $rawData;
 
+    /** @var string */
+    private $locale;
+
     /** @var string|null */
     public $applicationId;
 
@@ -52,6 +55,7 @@ class Request
         $this->requestId = $data['request']['requestId'];
         $this->timestamp = new DateTime($data['request']['timestamp']);
         $this->session = new Session($data['session']);
+        $this->locale = $data['request']['locale'];
 
         $this->applicationId = (is_null($applicationId) && isset($data['session']['application']['applicationId']))
             ? $data['session']['application']['applicationId']
@@ -78,6 +82,15 @@ class Request
     public function setApplicationDependency(Application $application)
     {
         $this->application = $application;
+    }
+
+    /**
+     * Return request's locale
+     * @return string
+     */
+    public function locale(): string
+    {
+        return $this->locale;
     }
 
     /**
