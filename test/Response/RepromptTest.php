@@ -7,6 +7,9 @@ use PHPUnit\Framework\TestCase;
 
 class RepromptTest extends TestCase
 {
+    /**
+     * @throws \Exception
+     */
     public function testCreatingReprompt()
     {
         $text = base64_encode(random_bytes(12));

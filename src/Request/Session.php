@@ -2,8 +2,6 @@
 
 namespace Alexa\Request;
 
-use Exception;
-
 class Session
 {
     /** @var User */

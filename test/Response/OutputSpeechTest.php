@@ -7,6 +7,9 @@ use PHPUnit\Framework\TestCase;
 
 class OutputSpeechTest extends TestCase
 {
+    /**
+     * @throws \Exception
+     */
     public function testPlainTextCreation()
     {
         $text = random_bytes(12);
@@ -18,6 +21,9 @@ class OutputSpeechTest extends TestCase
         ], $speech->render());
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testSsmlCreation()
     {
         $ssml = '<speech>' . base64_encode(random_bytes(12)) . '</speech>';

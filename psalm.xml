@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<psalm name="Psalm configuration" stopOnFirstError="false" useDocblockTypes="true" totallyTyped="true">
+<psalm name="Psalm configuration" useDocblockTypes="true" totallyTyped="true">
     <projectFiles>
         <directory name="src" />
     </projectFiles>

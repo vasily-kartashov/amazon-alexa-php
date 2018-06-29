@@ -23,7 +23,11 @@ class Application
      */
     public function __construct(string $applicationId)
     {
-        $this->applicationId = preg_split('/,/', $applicationId);
+        $tokens = preg_split('/,/', $applicationId);
+        if ($tokens === false) {
+            throw new AlexaException('Invalid application ID');
+        }
+        $this->applicationId = $tokens;
     }
 
     /**

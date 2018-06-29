@@ -3,9 +3,7 @@
 namespace Alexa\Request;
 
 use DateTime;
-use Exception;
 use InvalidArgumentException;
-use RuntimeException;
 
 class Request
 {

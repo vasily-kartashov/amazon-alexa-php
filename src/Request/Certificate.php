@@ -123,7 +123,14 @@ class Certificate
             throw new AlexaException('Empty request signature');
         }
         $certKey = openssl_pkey_get_public($this->certificateContent);
-        $valid = openssl_verify($requestData, base64_decode($this->requestSignature), $certKey, self::ENCRYPT_METHOD);
+        if ($certKey === false) {
+            throw new AlexaException('Cannot extract public key from certificate');
+        }
+        $signature = base64_decode($this->requestSignature);
+        if ($signature === false) {
+            throw new AlexaException('Cannot decode signature');
+        }
+        $valid = openssl_verify($requestData, $signature, $certKey, self::ENCRYPT_METHOD);
         if (!$valid) {
             throw new AlexaException('Request signature could not be verified');
         }

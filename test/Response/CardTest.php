@@ -7,6 +7,9 @@ use PHPUnit\Framework\TestCase;
 
 class CardTest extends TestCase
 {
+    /**
+     * @throws \Exception
+     */
     public function testSimpleCard()
     {
         $title = base64_encode(random_bytes(12));
