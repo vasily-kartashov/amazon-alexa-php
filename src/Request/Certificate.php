@@ -123,10 +123,12 @@ class Certificate
             throw new AlexaException('Empty request signature');
         }
         $certKey = openssl_pkey_get_public($this->certificateContent);
+        /** @psalm-suppress TypeDoesNotContainType */
         if ($certKey === false) {
             throw new AlexaException('Cannot extract public key from certificate');
         }
         $signature = base64_decode($this->requestSignature);
+        /** @psalm-suppress TypeDoesNotContainType */
         if ($signature === false) {
             throw new AlexaException('Cannot decode signature');
         }
