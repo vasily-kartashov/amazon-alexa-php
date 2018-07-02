@@ -30,7 +30,7 @@ class Session
      *   new:bool|null,attributes:array
      * } $data
      */
-    public function __construct(array $data)
+    public function __construct($data)
     {
         $this->user = new User($data['user']);
         $this->sessionId = $data['sessionId'] ?? null;
