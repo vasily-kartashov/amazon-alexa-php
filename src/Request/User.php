@@ -12,10 +12,10 @@ class User
 
     /**
      * User constructor.
-     * @param array|null $data
+     * @param array $data
      * @psalm-param array{userId:string|null,accessToken:string|null} $data
      */
-    public function __construct($data)
+    public function __construct(array $data)
     {
         $this->userId = $data['userId'] ?? null;
         $this->accessToken = $data['accessToken'] ?? null;
