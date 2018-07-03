@@ -12,6 +12,7 @@ class LaunchRequest extends Request
      */
     public function __construct($rawData)
     {
+        /** @psalm-suppress DeprecatedMethod */
         parent::__construct($rawData);
         $this->applicationId = $this->data['session']['application']['applicationId'];
     }

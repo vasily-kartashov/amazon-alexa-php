@@ -12,6 +12,7 @@ class SessionEndedRequest extends Request
      */
     public function __construct($rawData)
     {
+        /** @psalm-suppress DeprecatedMethod */
         parent::__construct($rawData);
         $this->reason = $this->data['request']['reason'];
     }

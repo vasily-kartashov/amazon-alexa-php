@@ -62,8 +62,14 @@ class Request
             : $applicationId;
     }
 
+    /**
+     * @param RequestInterface $request
+     * @param string $applicationId
+     * @return Request
+     */
     public static function fromHttpRequest(RequestInterface $request, string $applicationId): Request
     {
+        /** @psalm-suppress DeprecatedMethod */
         $alexaRequest = new self($request->getBody()->getContents(), $applicationId);
         $certificate = new Certificate($request->getHeaderLine('SignatureCertChainUrl'), $request->getHeaderLine('Signature'));
         $alexaRequest->setCertificateDependency($certificate);
