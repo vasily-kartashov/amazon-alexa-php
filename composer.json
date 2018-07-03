@@ -5,6 +5,10 @@
   "type": "library",
   "authors": [
     {
+      "name": "Vasily Kartashov",
+      "email": "info@kartashov.com"
+    },
+    {
       "name": "Mathias Hansen",
       "email": "me@codemonkey.io"
     },
@@ -18,7 +22,8 @@
     }
   ],
   "require": {
-      "php": ">=7.0"
+      "php": ">=7.0",
+      "psr/http-message": "1.*"
   },
   "require-dev": {
       "phpunit/phpunit": "^6.0",

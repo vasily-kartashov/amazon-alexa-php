@@ -4,6 +4,7 @@ namespace Alexa\Request;
 
 use DateTime;
 use InvalidArgumentException;
+use Psr\Http\Message\RequestInterface;
 
 class Request
 {
@@ -37,7 +38,8 @@ class Request
     /**
      * Set up Request with RequestId, timestamp (DateTime) and user (User obj.)
      * @param string $rawData
-     * @param mixed $applicationId
+     * @param string|null $applicationId
+     * @deprecated Please use static factory method fromHttpRequest. The method will be made protected at some point in future.
      */
     public function __construct($rawData, $applicationId = null)
     {
@@ -58,6 +60,14 @@ class Request
         $this->applicationId = (is_null($applicationId) && isset($data['session']['application']['applicationId']))
             ? $data['session']['application']['applicationId']
             : $applicationId;
+    }
+
+    public static function fromHttpRequest(RequestInterface $request, string $applicationId): Request
+    {
+        $alexaRequest = new self($request->getBody()->getContents(), $applicationId);
+        $certificate = new Certificate($request->getHeaderLine('SignatureCertChainUrl'), $request->getHeaderLine('Signature'));
+        $alexaRequest->setCertificateDependency($certificate);
+        return $alexaRequest->fromData();
     }
 
     /**

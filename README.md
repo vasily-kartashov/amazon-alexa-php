@@ -16,30 +16,28 @@ Install via composer: `vasily-kartashov/amazon-alexa-php`.
 - Add more unit tests
 - Deprecate the old confusing API
 - Add dependency on standard HTTP request object
+- Add integration with Oauth-Server from php-league 
 - ~~Stop throwing exceptions around~~
 - Add LoggerAwareInterface
 - Extract Certificate validation authority and add cacheing to it
+- Add validator and dependency on https://github.com/alexa/alexa-smarthome/tree/master/validation_schemas
+
+
 
 
 ### Requests
-When Amazon Alexa triggers your skill, a HTTP request will be sent to the URL you specified for your app.
 
-You can get the `JSON` body of the request like so:
+Create request by using a factory method `Request::fromHttpRequest` that accepts objects of type `RequestInterface` as defined by PSR-7. 
+For example when using Guzzle one can initialize an Alexa request object by running:
+
 ```php
-$applicationId = "your-application-id-from-alexa"; // See developer.amazon.com and your Application. Will start with "amzn1.echo-sdk-ams.app."
-$rawRequest = $request->getContent; // This is how you would retrieve this with Laravel or Symfony 2.
-$alexa = new \Alexa\Request\Request($rawRequest, $applicationId);
-$alexaRequest = $alexa->fromData();
+$request = Request::fromHttpRequest(ServerRequest::fromGlobals(), $applicationId);
 ```
 
-The library expect raw request data, not parsed JSON as it needs to validate the request signature.
 
-You can determine the type of the request with `instanceof`, e.g.:
-```php
-if ($alexaRequest instanceof IntentRequest) {
-	// Handle intent here
-}
-```
+
+
+
 
 ### Certificate validation
 By default the system validates the request signature by fetching Amazon's signing certificate and decrypting the signature. You need CURL to be able to get the certificate. No caching is done but you can override the Certificate class easily if you want to implement certificate caching yourself based on what your app provides:
