@@ -23,6 +23,7 @@
   ],
   "require": {
       "php": ">=7.0",
+      "ext-curl": "*",
       "psr/http-message": "1.*"
   },
   "require-dev": {
