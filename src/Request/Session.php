@@ -66,7 +66,7 @@ class Session
         if ($this->sessionId === null) {
             throw new AlexaException('Session ID not present');
         }
-        ini_set('session.use_cookies', 0); # disable session cookies
+        ini_set('session.use_cookies', '0'); # disable session cookies
         session_id($this->parseSessionId($this->sessionId));
         return session_start();
     }
