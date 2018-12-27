@@ -23,14 +23,14 @@
   ],
   "require": {
       "php": ">=7.0",
-      "ext-curl": "*",
-      "psr/http-message": "1.*"
+      "ext-curl": "@stable",
+      "psr/http-message": "@stable"
   },
   "require-dev": {
-      "phpunit/phpunit": "^6.0",
-      "phpstan/phpstan": "*",
-      "squizlabs/php_codesniffer": "*",
-      "vimeo/psalm": "*"
+      "phpunit/phpunit": "@stable",
+      "phpstan/phpstan": "@stable",
+      "squizlabs/php_codesniffer": "@stable",
+      "vimeo/psalm": "@stable"
   },
   "autoload": {
       "psr-4": {

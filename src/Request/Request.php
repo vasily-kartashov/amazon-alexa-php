@@ -142,6 +142,7 @@ class Request
         }
         $className = '\\Alexa\\Request\\' . $requestType;
 
+        /** @psalm-suppress InvalidStringClass */
         $request = new $className($this->rawData);
         if ($request instanceof Request) {
             return $request;
