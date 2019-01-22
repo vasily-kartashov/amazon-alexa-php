@@ -24,6 +24,7 @@
   "require": {
     "php": ">=7.0",
     "ext-curl": "@stable",
+    "ext-json": "@stable",
     "ext-openssl": "@stable",
     "psr/http-message": "@stable"
   },

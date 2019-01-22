@@ -3,6 +3,7 @@
 namespace Alexa\Request;
 
 use DateTime;
+use Exception;
 use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 
@@ -40,6 +41,7 @@ class Request
      * @param string $rawData
      * @param string|null $applicationId
      * @deprecated Please use static factory method fromHttpRequest. The method will be made protected at some point in future.
+     * @throws Exception
      */
     public function __construct($rawData, $applicationId = null)
     {
@@ -66,6 +68,7 @@ class Request
      * @param RequestInterface $request
      * @param string $applicationId
      * @return Request
+     * @throws Exception
      */
     public static function fromHttpRequest(RequestInterface $request, string $applicationId): Request
     {
