@@ -22,19 +22,20 @@
     }
   ],
   "require": {
-      "php": ">=7.0",
-      "ext-curl": "@stable",
-      "psr/http-message": "@stable"
+    "php": ">=7.0",
+    "ext-curl": "@stable",
+    "ext-openssl": "@stable",
+    "psr/http-message": "@stable"
   },
   "require-dev": {
-      "phpunit/phpunit": "@stable",
-      "phpstan/phpstan": "@stable",
-      "squizlabs/php_codesniffer": "@stable",
-      "vimeo/psalm": "@stable"
+    "phpunit/phpunit": "@stable",
+    "phpstan/phpstan": "@stable",
+    "squizlabs/php_codesniffer": "@stable",
+    "vimeo/psalm": "@stable"
   },
   "autoload": {
-      "psr-4": {
-          "Alexa\\" : "src/"
-      }
+    "psr-4": {
+      "Alexa\\" : "src/"
+    }
   }
 }

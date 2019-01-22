@@ -180,15 +180,26 @@ class Certificate
             throw new AlexaException('Certificate URL not set');
         }
         $url = parse_url($this->certificateUrl);
+        if ($url === false) {
+            throw new AlexaException('Cannot parse certificate URL: ' . $this->certificateUrl);
+        }
 
-        if ($url['scheme'] !== static::SIGNATURE_VALID_PROTOCOL) {
-            throw new AlexaException('Invalid protocol');
-        } elseif ($url['host'] !== static::SIGNATURE_VALID_HOSTNAME) {
-            throw new AlexaException('Invalid hostname');
-        } elseif (strpos($url['path'], static::SIGNATURE_VALID_PATH) !== 0) {
-            throw new AlexaException('Invalid path');
-        } elseif (isset($url['port']) && $url['port'] !== static::SIGNATURE_VALID_PORT) {
-            throw new AlexaException('Invalid port');
+        $scheme = $url['scheme'] ?? null;
+        $host   = $url['host'] ?? null;
+        $path   = $url['path'] ?? null;
+        $port   = $url['port'] ?? null;
+
+        if ($scheme !== static::SIGNATURE_VALID_PROTOCOL) {
+            throw new AlexaException('Invalid protocol: ' . $this->certificateUrl);
+        }
+        if ($host !== static::SIGNATURE_VALID_HOSTNAME) {
+            throw new AlexaException('Invalid hostname: ' . $this->certificateUrl);
+        }
+        if ($path === null || strpos($path, static::SIGNATURE_VALID_PATH) !== 0) {
+            throw new AlexaException('Invalid path: ' . $this->certificateUrl);
+        }
+        if (isset($port) && $port !== static::SIGNATURE_VALID_PORT) {
+            throw new AlexaException('Invalid port: ' . $this->certificateUrl);
         }
     }
 
