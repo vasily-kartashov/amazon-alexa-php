@@ -29,7 +29,7 @@
     "psr/http-message": "@stable"
   },
   "require-dev": {
-    "phpunit/phpunit": "@stable",
+    "phpunit/phpunit": "^6 || ^7",
     "phpstan/phpstan": "@stable",
     "squizlabs/php_codesniffer": "@stable",
     "vimeo/psalm": "@stable"
