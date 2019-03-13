@@ -45,6 +45,7 @@ class Request
      */
     public function __construct($rawData, $applicationId = null)
     {
+        /** @psalm-suppress DocblockTypeContradiction */
         if (!is_string($rawData)) {
             throw new InvalidArgumentException('Alexa Request requires the raw JSON data to validate request signature');
         }
