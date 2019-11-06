@@ -21,6 +21,11 @@
       "email": "info@jsuchy.cz"
     }
   ],
+  "config": {
+    "optimize-autoloader": true,
+    "classmap-authoritative": true,
+    "sort-packages": true
+  },
   "require": {
     "php": ">=7.0",
     "ext-curl": "@stable",
@@ -29,8 +34,8 @@
     "psr/http-message": "@stable"
   },
   "require-dev": {
+    "jakub-onderka/php-parallel-lint": "@stable",
     "phpunit/phpunit": "^6 || ^7",
-    "phpstan/phpstan": "@stable",
     "squizlabs/php_codesniffer": "@stable",
     "vimeo/psalm": "@stable"
   },

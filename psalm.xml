@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
-<psalm name="Psalm configuration" useDocblockTypes="true" totallyTyped="true">
+<psalm totallyTyped="true"
+        requireVoidReturnType="true"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://getpsalm.org/schema/config"
+        xsi:schemaLocation="https://getpsalm.org/schema/config https://raw.githubusercontent.com/vimeo/psalm/master/config.xsd">
     <projectFiles>
         <directory name="src" />
     </projectFiles>
@@ -7,10 +11,6 @@
         <MixedArgument errorLevel="suppress"/>
         <MixedArrayAccess errorLevel="suppress"/>
         <MixedAssignment errorLevel="suppress"/>
-        <MixedInferredReturnType errorLevel="suppress"/>
-        <MixedMethodCall errorLevel="suppress"/>
-        <MixedOperand errorLevel="suppress"/>
-        <PropertyNotSetInConstructor errorLevel="suppress"/>
         <RedundantConditionGivenDocblockType errorLevel="suppress"/>
     </issueHandlers>
 </psalm>

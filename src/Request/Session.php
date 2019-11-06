@@ -10,7 +10,7 @@ class Session
     /** @var bool|null */
     public $new;
 
-    /** @var Application */
+    /** @var Application|null */
     public $application;
 
     /** @var string|null */

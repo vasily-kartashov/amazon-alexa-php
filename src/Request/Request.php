@@ -6,6 +6,8 @@ use DateTime;
 use Exception;
 use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
+use ReflectionClass;
+use ReflectionException;
 
 class Request
 {
@@ -139,15 +141,18 @@ class Request
         // Validate that the request signature matches the certificate.
         $this->certificate->validateRequest($this->rawData);
 
-
-        $requestType = $data['request']['type'];
-        if (!class_exists('\\Alexa\\Request\\' . $requestType)) {
-            throw new AlexaException('Unknown request type: ' . $requestType);
-        }
+        $requestType = (string) $data['request']['type'];
         $className = '\\Alexa\\Request\\' . $requestType;
+        if (!class_exists($className)) {
+            throw new AlexaException('Unknown request type: ' . $className);
+        }
+        try {
+            $reflectionClass = new ReflectionClass($className);
+            $request = $reflectionClass->newInstanceArgs([$this->rawData]);
+        } catch (ReflectionException $e) {
+            throw new AlexaException('Cannot load request class', 0, $e);
+        }
 
-        /** @psalm-suppress InvalidStringClass */
-        $request = new $className($this->rawData);
         if ($request instanceof Request) {
             return $request;
         } else {

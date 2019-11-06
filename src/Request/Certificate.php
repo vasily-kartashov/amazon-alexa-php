@@ -19,13 +19,13 @@ class Certificate
     const ECHO_SERVICE_DOMAIN = 'echo-api.amazon.com';
     const ENCRYPT_METHOD = "sha1WithRSAEncryption";
 
-    /** @var string */
+    /** @var string|null */
     public $requestId;
 
     /** @var mixed */
     public $timestamp;
 
-    /** @var Session */
+    /** @var Session|null */
     public $session;
 
     /** @var string|null */
