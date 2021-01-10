@@ -5,6 +5,9 @@
         xsi:schemaLocation="https://getpsalm.org/schema/config https://raw.githubusercontent.com/vimeo/psalm/master/config.xsd">
     <projectFiles>
         <directory name="src" />
+        <ignoreFiles>
+            <directory name="vendor"/>
+        </ignoreFiles>
     </projectFiles>
     <issueHandlers>
         <MixedArgument errorLevel="suppress"/>

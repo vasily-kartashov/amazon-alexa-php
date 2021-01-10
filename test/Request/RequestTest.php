@@ -7,7 +7,6 @@ use Alexa\Request\Request;
 use DateTime;
 use Exception;
 use PHPUnit\Framework\Assert;
-use PHPUnit\Framework\TestCase;
 
 class RequestTest // extends TestCase
 {

@@ -20,12 +20,10 @@ class ApplicationTest extends TestCase
         Assert::assertTrue(true);
     }
 
-    /**
-     * @expectedException \Alexa\Request\AlexaException
-     */
     public function testInvalidApplicationId()
     {
         $application = new Application('a,b,c');
+        $this->expectException(AlexaException::class);
         $application->validateApplicationId('d');
     }
 }

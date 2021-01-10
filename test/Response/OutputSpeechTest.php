@@ -2,6 +2,7 @@
 
 namespace Alexa\Response;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
@@ -35,12 +36,10 @@ class OutputSpeechTest extends TestCase
         ], $speech->render());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testInvalidSsmlCreation()
     {
         $ssml = '<speech>' . base64_encode(random_bytes(12)) . '</speach>';
+        $this->expectException(InvalidArgumentException::class);
         OutputSpeech::ssml($ssml);
     }
 }
