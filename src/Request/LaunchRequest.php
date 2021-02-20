@@ -4,7 +4,7 @@ namespace Alexa\Request;
 
 class LaunchRequest extends Request
 {
-    /** @var string */
+    /** @var string|null */
     public $applicationId;
 
     /**
